@@ -1,16 +1,17 @@
 'use server';
 
 import { Job } from '@/types';
+import { wait } from '@/utils';
 import prisma from '@/utils/prisma';
 import { Prisma } from '@prisma/client';
 
-type FetchJobsProps = {
+export type FetchJobsProps = {
   search?: string | null;
   page?: number;
   take?: number;
 }
 
-type ReturnType = {
+type FetchJobsReturnProps = {
   jobs: Job[],
   count: number;
   page: number;
@@ -23,7 +24,9 @@ export const fetchJobs = async ({
   search,
   page = 1,
   take = 10,
-}: FetchJobsProps): Promise<ReturnType> => {
+}: FetchJobsProps): Promise<FetchJobsReturnProps> => {
+  await wait(Math.random() * 1000);
+
   try {
     const where: Prisma.JobWhereInput = {};
     if (search) where.OR = [
@@ -33,9 +36,9 @@ export const fetchJobs = async ({
     ];
 
     const jobs: Job[] = await prisma.job.findMany({
-      // where,
       // orderBy: { createdAt: 'desc' },
-      orderBy: { position: 'asc' },
+      where,
+      // orderBy: { position: 'asc' },
       skip: take * (page - 1),
       take,
     });

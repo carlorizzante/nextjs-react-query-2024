@@ -36,7 +36,6 @@ export const Content = () => {
 
   return (
     <>
-      <p>Content</p>
       <button onClick={() => mutate.mutate()}>Create job</button>
       <ul>
         {result.data?.jobs.map((job) => (

@@ -8,6 +8,7 @@ export default function Home() {
       <nav className="mt-6">
         <ul>
           <li><Link href="/web-dev-simplified">Web Dev Simplified</Link></li>
+          <li><Link href="/code-genix">Code Genix</Link></li>
         </ul>
       </nav>
     </main>
